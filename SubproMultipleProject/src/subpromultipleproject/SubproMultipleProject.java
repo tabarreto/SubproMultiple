@@ -15,11 +15,16 @@ public class SubproMultipleProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Desde el apto");
-        System.out.println("Desde el apto");
-        System.out.println("modificado en el repo");
-        System.out.println("modificado en el repo 4");
-        System.out.println("Desde el apto 4");
-    }
+        Thread supro1 = new Thread(new Tarea("Tarea 1"));
+        Thread supro2 = new Thread(new Tarea("Tarea 2"));
+        Thread supro3 = new Thread(new Tarea("Tarea 3"));
 
+        System.out.println("Subprocesos creados, iniciando tareas.");
+
+        supro1.start();
+        supro2.start();
+        supro3.start();
+
+        System.out.println("Termina de ejecutarse el main.\n");
+    }
 }
