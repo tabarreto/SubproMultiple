@@ -5,6 +5,10 @@
  */
 package subpromultipleproject;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author antonio
@@ -19,12 +23,15 @@ public class SubproMultipleProject {
         Thread supro2 = new Thread(new Tarea("Tarea 2"));
         Thread supro3 = new Thread(new Tarea("Tarea 3"));
 
-        System.out.println("Subprocesos creados, iniciando tareas.");
+        System.out.println("Iniciandi executor");
 
-        supro1.start();
-        supro2.start();
-        supro3.start();
-
+        ExecutorService executor = Executors.newCachedThreadPool();
+        executor.execute(supro1);
+        executor.execute(supro2);
+        executor.execute(supro3);
+        
+        executor.shutdown();
+ 
         System.out.println("Termina de ejecutarse el main.\n");
     }
 }
