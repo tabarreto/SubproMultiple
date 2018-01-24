@@ -23,11 +23,11 @@ public class ArregloSimple {
     } // fin del constructor
 
     // agrega un valor al arreglo compartido
-    public void agregar(int valor) {
+    public synchronized void agregar(int valor) {
         int posicion = indiceEscritura;  // almacena el índice de escritura
         try {
             // pone el subproceso en inactividad de 0 a 499 milisegundos
-            Thread.sleep(generador.nextInt(9000));
+            Thread.sleep(generador.nextInt(3000));
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }

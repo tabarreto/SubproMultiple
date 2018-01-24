@@ -8,8 +8,6 @@ package subpromultipleproject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +18,7 @@ public class SubproMultipleProject {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void mainm(String[] args) {
 //        Tarea supro1 = new Tarea("Tarea 1");
 //        Tarea supro2 = new Tarea("Tarea 2");
 //        Tarea supro3 = new Tarea("Tarea 3");
@@ -59,6 +57,5 @@ public class SubproMultipleProject {
         } catch (InterruptedException ex) {
             System.out.println("Hubo una interrupcion mientras esperaba a que terminaran las tareas.");
         }
-
     }
 }
