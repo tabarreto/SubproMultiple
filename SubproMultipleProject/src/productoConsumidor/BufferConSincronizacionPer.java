@@ -39,15 +39,10 @@ public class BufferConSincronizacionPer implements Buffer {
         while (celdasOcupadas == 0) {
             wait();
         }
-        int x = 0;
-        if (indiceLectura > bufer.length - 1) {
-            indiceLectura = 0;
-        } else {
-            x = indiceLectura;
-            ++indiceLectura;
-        }
+        int value = bufer[indiceLectura];
+        indiceLectura = (indiceLectura + 1) % bufer.length;
         celdasOcupadas--;
         notifyAll();
-        return bufer[x];
+        return value;
     }
 }

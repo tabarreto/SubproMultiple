@@ -15,8 +15,9 @@ import java.util.concurrent.Executors;
 public class PruebaBuferCompartido {
 
     public static void main(String[] args) {
-        BufferConSincronizacionPer ubicacionCompartida = new BufferConSincronizacionPer(3);
 //        BufferConSincronizacionAPI ubicacionCompartida = new BufferConSincronizacionAPI();
+//        BufferConSincronizacionPer ubicacionCompartida = new BufferConSincronizacionPer(5);
+        BufferConSincronizacionPerLock ubicacionCompartida = new BufferConSincronizacionPerLock(5);
 
         Productor productor = new Productor(ubicacionCompartida);
         Consumidor consumidor = new Consumidor(ubicacionCompartida);

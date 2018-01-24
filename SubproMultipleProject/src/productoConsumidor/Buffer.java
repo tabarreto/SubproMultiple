@@ -9,7 +9,7 @@ package productoConsumidor;
  *
  * @author Sandra
  */
-public interface Buffer {
+public interface Buffer{
 
     int read() throws InterruptedException;
 
