@@ -5,15 +5,19 @@
  */
 package productoConsumidor;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
  * @author Sandra
  */
-public class BufferConSincronizacionPerLock extends BufferLock implements Buffer {
+public class BufferConSincronizacionPerLock implements Buffer {
 
+    private final Lock bloqueo = new ReentrantLock();
+    private final Condition conditionWrite = bloqueo.newCondition();
+    private final Condition conditionRead = bloqueo.newCondition();
     private final int[] bufer;
     private int celdasOcupadas = 0;
     private int indiceEscritura = 0;
@@ -27,55 +31,37 @@ public class BufferConSincronizacionPerLock extends BufferLock implements Buffer
     }
 
     @Override
-    public synchronized void write(int valor) throws InterruptedException {
-        while (celdasOcupadas == bufer.length - 1) {
-            wait();
+    public void write(int valor) throws InterruptedException {
+        bloqueo.lock();
+        try {
+            while (celdasOcupadas == bufer.length - 1) {
+                conditionWrite.await();
+            }
+            bufer[indiceEscritura] = valor;
+            indiceEscritura = (indiceEscritura + 1) % bufer.length;
+            celdasOcupadas++;
+
+            conditionRead.signal();
+        } finally {
+            bloqueo.unlock();
         }
-        bufer[indiceEscritura] = valor;
-        indiceEscritura = (indiceEscritura + 1) % bufer.length;
-        celdasOcupadas++;
-        notifyAll();
     }
 
     @Override
     public synchronized int read() throws InterruptedException {
-        while (celdasOcupadas == 0) {
-            wait();
+        bloqueo.lock();
+        int value = 0;
+        try {
+            while (celdasOcupadas == 0) {
+                conditionRead.await();
+            }
+            value = bufer[indiceLectura];
+            indiceLectura = (indiceLectura + 1) % bufer.length;
+            celdasOcupadas--;
+            conditionWrite.signal();
+        } finally {
+            bloqueo.unlock();
         }
-        int value = bufer[indiceLectura];
-        indiceLectura = (indiceLectura + 1) % bufer.length;
-        celdasOcupadas--;
-        notifyAll();
         return value;
-    }
-
-    @Override
-    public void lock() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void lockInterruptibly() throws InterruptedException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean tryLock() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void unlock() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Condition newCondition() {
-        return new WaitCondition();
     }
 }
