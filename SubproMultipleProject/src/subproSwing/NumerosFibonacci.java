@@ -46,7 +46,7 @@ public class NumerosFibonacci extends JFrame {
 
     private void initComponents() {
         trabajadorJPanel = new JPanel(new GridLayout(2, 2, 5, 5));
-        trabajadorJPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK), "Con SwingWorker"));
+        trabajadorJPanel.setBorder(new TitledBorder(new LineBorder(Color.BLACK), "Con SwingWorkerfdfd"));
         numeroJTextField = new JTextField();
         iniciarJButton = new JButton("Iniciar");
         fibonacciJLabel = new JLabel("Obtener Fibonacci de:");
