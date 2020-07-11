@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author antonio tonito
+ * @author antonio tonito desarrollo
  */
 public class SumaNumero extends JFrame {
 
